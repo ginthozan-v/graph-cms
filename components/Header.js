@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import {
 	FaFacebookF,
 	FaGripLines,
@@ -16,7 +17,9 @@ const Header = () => {
 		<div className="bg-red-50/50 py-5 leading-none">
 			<div className="max-w-screen-xl mx-auto flex justify-between items-center">
 				<div className="flex items-center">
-					<h1 className="text-2xl font-bold mr-6">Graph CMS</h1>
+					<Link href="/">
+						<a className="text-2xl font-bold mr-6">Graph CMS</a>
+					</Link>
 					<nav className="flex items-center gap-4 text-neutral-600">
 						<p className="bg-gradient-to-tr from-[#FC5C76] to-[#FDA287] py-2 px-4 text-white font-semibold rounded-full ">
 							Home

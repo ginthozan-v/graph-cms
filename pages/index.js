@@ -1,201 +1,98 @@
+import Link from "next/link";
+import Head from "next/head";
 import Image from "next/image";
+import moment from "moment";
+import { BsChat } from "react-icons/bs";
+import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaMusic, FaSpotify } from "react-icons/fa";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import Card from "./../components/Card";
+import { getPost } from "../services";
+import RecentPosts from "./../components/RecentPosts";
+import Categories from "./../components/Categories";
 
-export default function Home() {
+export default function Home({ posts }) {
 	return (
-		<div className="max-w-screen-xl mx-auto my-10">
-			<div className="grid grid-cols-3 gap-5">
-				<div className="col-span-2">
-					<div className="relative w-full h-[500px] rounded-xl overflow-hidden shadow-xl">
-						<Image
-							src="https://images.unsplash.com/photo-1657456621506-76924543dbca?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-							layout="fill"
-							objectFit="cover"
-						/>
-						<div className="absolute bottom-10 left-10">
-							<h1 className="text-white text-4xl font-bold">Graph CMS</h1>
-						</div>
-					</div>
-				</div>
-				<div className="border border-slate-200 rounded-xl p-6  divide-y-2 divide-slate-100 flex flex-col gap-5">
-					<div className="flex items-start gap-3">
-						<div className="flex-shrink-0 relative w-14 h-14 rounded-full overflow-hidden">
-							<Image
-								src="https://images.unsplash.com/photo-1601412436009-d964bd02edbc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-								layout="fill"
-								objectFit="cover"
-							/>
-						</div>
-						<div>
-							<h1 className="leading-none text-slate-700 font-bold">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</h1>
-							<p className="text-sm text-slate-400 mt-1">31 March 2022</p>
-						</div>
-					</div>
-
-					<div className="flex items-start gap-3 pt-3">
-						<div className="flex-shrink-0 relative w-14 h-14 rounded-full overflow-hidden">
-							<Image
-								src="https://images.unsplash.com/photo-1601412436009-d964bd02edbc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-								layout="fill"
-								objectFit="cover"
-							/>
-						</div>
-						<div>
-							<h1 className="leading-none text-slate-700 font-bold">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</h1>
-							<p className="text-sm text-slate-400 mt-1">31 March 2022</p>
-						</div>
-					</div>
-
-					<div className="flex items-start gap-3 pt-3">
-						<div className="flex-shrink-0 relative w-14 h-14 rounded-full overflow-hidden">
-							<Image
-								src="https://images.unsplash.com/photo-1601412436009-d964bd02edbc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-								layout="fill"
-								objectFit="cover"
-							/>
-						</div>
-						<div>
-							<h1 className="leading-none text-slate-700 font-bold">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</h1>
-							<p className="text-sm text-slate-400 mt-1">31 March 2022</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div className="grid grid-cols-3 gap-5 my-10">
-				<div className="col-span-2">
-					<div className="border border-slate-200 p-6 rounded-xl grid grid-cols-2 gap-x-5 gap-y-10">
-						<div>
+		<>
+			<Head>
+				<title>Graphql Blog</title>
+			</Head>
+			<div className="max-w-screen-xl mx-auto">
+				<div className="grid grid-cols-3 gap-10  items-start">
+					<div className="col-span-2 ">
+						<div className="my-10">
 							<div>
-								<div className="relative w-full h-56 rounded-xl overflow-hidden">
-									<Image
-										src="https://images.unsplash.com/photo-1659193788664-f085e3076db8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=715&q=80"
-										layout="fill"
-										objectFit="cover"
-									/>
-								</div>
 								<div className="flex items-center gap-3 my-4">
-									<div className="relative w-7 h-7 rounded-full overflow-hidden">
+									<div className="relative w-10 h-10 rounded-full overflow-hidden">
 										<Image
-											src="https://images.unsplash.com/photo-1464582883107-8adf2dca8a9f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+											src={posts[0].node.author.photo.url}
 											layout="fill"
 											objectFit="cover"
+											alt="avatar"
 										/>
 									</div>
-									<p className="text-sm text-slate-400 leading-none">
-										Katen Done ∙ 31 March 2022
+									<p className="text-base text-slate-400 leading-none flex items-baseline gap-2">
+										{posts[0].node.author.name} ·{" "}
+										{moment(posts[0].node.createdAt).format("DD MMMM YYYY")} ·{" "}
+										<BsChat className="w-4 h-4" /> (0)
 									</p>
 								</div>
-								<h1 className="text-slate-700 text-lg font-bold leading-none">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
+								<h1 className="text-5xl font-bold text-slate-900 mt-3">
+									{posts[0].node.title}
 								</h1>
-								<p className="text-slate-400 leading-5 mt-2">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-									Officiis, modi labore. Mollitia, dolorem incidunt sequi aperiam
-								</p>
+							</div>
+
+							<div className="relative w-fll h-[500px] rounded-xl overflow-hidden mt-5">
+								<Image
+									src={posts[0].node.featuredImage.url}
+									layout="fill"
+									objectFit="cover"
+									alt="featured image"
+								/>
+							</div>
+
+							<div className="max-w-4xl mx-auto mt-5">
+								<p className="text-lg text-slate-400">{posts[0].node.excerpt}</p>
+
+								<div className="mt-8 border-t border-slate-200 pt-5 flex items-center justify-between">
+									<div className="flex items-center gap-4 leading-none">
+										<FaFacebookF className="w-4 h-4 text-slate-400" />
+										<FaTwitter className="w-4 h-4 text-slate-400" />
+										<FaInstagram className="w-4h-4 text-slate-400" />
+										<FaYoutube className="w-4 h-4 text-slate-400" />
+										<FaMusic className="w-4 h-4 text-slate-400" />
+										<FaSpotify className="w-4 h-4 text-slate-400" />
+									</div>
+
+									<Link href={`post/${posts[0].node.slug}`}>
+										<a className="flex items-center gap-1 test-slate-800 font-semibold">
+											Continue reading <MdKeyboardArrowRight />
+										</a>
+									</Link>
+								</div>
 							</div>
 						</div>
 
-						<div>
-							<div>
-								<div className="relative w-full h-56 rounded-xl overflow-hidden">
-									<Image
-										src="https://images.unsplash.com/photo-1659193788664-f085e3076db8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=715&q=80"
-										layout="fill"
-										objectFit="cover"
-									/>
-								</div>
-								<div className="flex items-center gap-3 my-4">
-									<div className="relative w-7 h-7 rounded-full overflow-hidden">
-										<Image
-											src="https://images.unsplash.com/photo-1464582883107-8adf2dca8a9f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-											layout="fill"
-											objectFit="cover"
-										/>
-									</div>
-									<p className="text-sm text-slate-400 leading-none">
-										Katen Done ∙ 31 March 2022
-									</p>
-								</div>
-								<h1 className="text-slate-700 text-lg font-bold leading-none">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-								</h1>
-								<p className="text-slate-400 leading-5 mt-2">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-									Officiis, modi labore. Mollitia, dolorem incidunt sequi aperiam
-								</p>
-							</div>
+						<div className="border border-slate-200 p-6 rounded-xl grid grid-cols-2 gap-x-5 gap-y-10 my-10">
+							{posts.map((post, i) => (
+								<Card key={i} post={post.node} />
+							))}
 						</div>
+					</div>
 
-						<div>
-							<div>
-								<div className="relative w-full h-56 rounded-xl overflow-hidden">
-									<Image
-										src="https://images.unsplash.com/photo-1659193788664-f085e3076db8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=715&q=80"
-										layout="fill"
-										objectFit="cover"
-									/>
-								</div>
-								<div className="flex items-center gap-3 my-4">
-									<div className="relative w-7 h-7 rounded-full overflow-hidden">
-										<Image
-											src="https://images.unsplash.com/photo-1464582883107-8adf2dca8a9f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-											layout="fill"
-											objectFit="cover"
-										/>
-									</div>
-									<p className="text-sm text-slate-400 leading-none">
-										Katen Done ∙ 31 March 2022
-									</p>
-								</div>
-								<h1 className="text-slate-700 text-lg font-bold leading-none">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-								</h1>
-								<p className="text-slate-400 leading-5 mt-2">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-									Officiis, modi labore. Mollitia, dolorem incidunt sequi aperiam
-								</p>
-							</div>
-						</div>
+					<div>
+						<RecentPosts />
 
-						<div>
-							<div>
-								<div className="relative w-full h-56 rounded-xl overflow-hidden">
-									<Image
-										src="https://images.unsplash.com/photo-1659193788664-f085e3076db8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=715&q=80"
-										layout="fill"
-										objectFit="cover"
-									/>
-								</div>
-								<div className="flex items-center gap-3 my-4">
-									<div className="relative w-7 h-7 rounded-full overflow-hidden">
-										<Image
-											src="https://images.unsplash.com/photo-1464582883107-8adf2dca8a9f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-											layout="fill"
-											objectFit="cover"
-										/>
-									</div>
-									<p className="text-sm text-slate-400 leading-none">
-										Katen Done ∙ 31 March 2022
-									</p>
-								</div>
-								<h1 className="text-slate-700 text-lg font-bold leading-none">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-								</h1>
-								<p className="text-slate-400 leading-5 mt-2">
-									Lorem ipsum dolor sit amet consectetur adipisicing elit.
-									Officiis, modi labore. Mollitia, dolorem incidunt sequi aperiam
-								</p>
-							</div>
-						</div>
+						<Categories />
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
+}
+
+export async function getStaticProps() {
+	const posts = (await getPost()) || [];
+	return {
+		props: { posts },
+	};
 }
