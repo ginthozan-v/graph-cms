@@ -1,4 +1,4 @@
-import { GraphQLClient, gql } from "graphql-request";
+import { gql, GraphQLClient } from "graphql-request";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT;
 
@@ -126,4 +126,30 @@ export const getCategories = async () => {
 	`;
 	const result = await hygraph.request(query);
 	return result.categories;
+};
+
+export const submitComment = async (obj) => {
+	const results = await fetch("/api/comments/", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(obj),
+	});
+
+	return results.json();
+};
+
+export const getComments = async (slug) => {
+	const query = gql`
+		query GetComments($slug: String!) {
+			comments(where: { post: { slug: $slug } }) {
+				comment
+				createdAt
+				name
+			}
+		}
+	`;
+	const result = await hygraph.request(query, { slug });
+	return result.comments;
 };

@@ -1,10 +1,10 @@
-import { getPost, getPostDetails } from "../../services";
-import RecentPosts from "../../components/RecentPosts";
 import { Banner, Content } from "../../components/post";
+import Comment from "../../components/post/comment";
+import RecentPosts from "../../components/RecentPosts";
+import { getPost, getPostDetails } from "../../services";
 import CommentsForm from "./../../components/post/CommentsForm";
 
 const Post = ({ post }) => {
-	console.log(post);
 	return (
 		<div>
 			<Banner
@@ -14,11 +14,12 @@ const Post = ({ post }) => {
 				category={post.categories[0].name}
 				created={post.createdAt}
 			/>
-			<div className=" max-w-screen-xl mx-auto">
+			<div className="max-w-screen-xl mx-auto ">
 				<div className="grid grid-cols-3 gap-10 ">
 					<div className="col-span-2 my-10">
 						<Content description={post.excerpt} content={post.content.raw} />
-						<CommentsForm />
+						<CommentsForm slug={post.slug} />
+						<Comment slug={post.slug} />
 					</div>
 					<div>
 						<RecentPosts slug={post.slug} />
